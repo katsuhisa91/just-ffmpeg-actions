@@ -9,13 +9,7 @@ jobs:
         uses: FedericoCarboni/setup-ffmpeg@v1-beta
         id: setup-ffmpeg
       - name: Execute ffmpeg
-        run: ffmpeg -i origin/shortcut-to-github1s.mov -an -r 10 %04d.png
-      - name: ImageMagick Action
-        uses: jruipinto/ImageMagick-action@v1
-        with:
-          command: |
-            convert *.png -resize 40% output_%04d.png
-            convert output_*.png gif/shortcut-to-github1s.gif
+        run: ffmpeg -i origin/shortcut-to-github1s.mov -vf scale=800:-1 -r 10 gif/shortcut-to-github1s.gif
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
