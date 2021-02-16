@@ -1,0 +1,10 @@
+name: Create Archive
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: FedericoCarboni/setup-ffmpeg@v1-beta
+        id: setup-ffmpeg
+      - run: ffmpeg -i origin/shortcut-to-github1s.mov gif/shortcut-to-github1s.gif
