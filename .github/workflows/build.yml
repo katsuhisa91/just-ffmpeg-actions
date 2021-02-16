@@ -5,14 +5,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: FedericoCarboni/setup-ffmpeg@v1-beta
+      - name: Setup ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v1-beta
         id: setup-ffmpeg
-      - run: ffmpeg -i origin/shortcut-to-github1s.mov -vf scale=320:-1 -r 10 gif/shortcut-to-github1s.gif
+      - name: Execute ffmpeg
+        run: ffmpeg -i origin/shortcut-to-github1s.mov -an -r 10 %04d.png
+      - name: ImageMagick Action
+        uses: jruipinto/ImageMagick-action@v1
+        with:
+          command: |
+            convert *.png -resize 40% output_%04d.png
+            convert output_*.png gif/shortcut-to-github1s.gif
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .
+          git add ./gif/*
           git commit -m "Add changes" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
