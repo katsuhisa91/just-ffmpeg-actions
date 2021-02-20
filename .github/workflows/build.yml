@@ -12,7 +12,7 @@ jobs:
         uses: FedericoCarboni/setup-ffmpeg@v1-beta
         id: setup-ffmpeg
       - name: Execute ffmpeg
-        run: ffmpeg -i origin/${{ env.BEFORE_PROCESSING_FILE }} -vf scale=800:-1 -r 10 processed/${{ env.AFTER_PROCESSING_FILE }}
+        run: ffmpeg -y -i origin/${{ env.BEFORE_PROCESSING_FILE }} -vf scale=800:-1 -r 10 processed/${{ env.AFTER_PROCESSING_FILE }}
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
