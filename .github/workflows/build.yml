@@ -3,13 +3,16 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BEFORE_PROCESSING_FILE: shortcut-to-github1s.mov
+      AFTER_PROCESSING_FILE: shortcut-to-github1s.gif
     steps:
       - uses: actions/checkout@v2
       - name: Setup ffmpeg
         uses: FedericoCarboni/setup-ffmpeg@v1-beta
         id: setup-ffmpeg
       - name: Execute ffmpeg
-        run: ffmpeg -i origin/shortcut-to-github1s.mov -vf scale=800:-1 -r 10 gif/shortcut-to-github1s.gif
+        run: ffmpeg -i origin/"${{ env.BEFORE_PROCESSING_FILE }}" -vf scale=800:-1 -r 10 gif/"${{ env.AFTER_PROCESSING_FILE }}"
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
